@@ -38,7 +38,7 @@ impl<D: 'static> ErrorHandler<D> for fn(&mut NickelError<D>, &mut Request<D>) ->
     }
 }
 
-pub struct MiddlewareStack<D=()> {
+pub struct MiddlewareStack<D> {
     handlers: Vec<Box<Middleware<D> + Send + Sync>>,
     error_handlers: Vec<Box<ErrorHandler<D> + Send + Sync>>
 }

@@ -26,7 +26,7 @@ use typemap::TypeMap;
 pub type TemplateCache = RwLock<HashMap<String, Template>>;
 
 ///A container for the response
-pub struct Response<'a, D: 'a = (), T: 'static + Any = Fresh> {
+pub struct Response<'a, D: 'a, T: 'static + Any = Fresh> {
     ///the original `hyper::server::Response`
     origin: HyperResponse<'a, T>,
     templates: &'a TemplateCache,
@@ -279,9 +279,9 @@ impl<'a, D> Response<'a, D, Fresh> {
         }
     }
 
-    pub fn server_data(&self) -> &D {
-        &self.data
-    }
+    //pub fn server_data(&self) -> &D {
+    //    &self.data
+    //}
 
     pub fn on_send<F>(&mut self, f: F)
             where F: FnMut(&mut Response<'a, D, Fresh>) + 'static {
