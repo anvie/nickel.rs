@@ -33,7 +33,7 @@ where D: KeyProvider {
     type Error = ();
 
     fn eval(req: &mut Request<D>) -> Result<CookieJar<'static>, ()> {
-        let key = req.data().key();
+        let key = req.server_data().key();
         let jar = match req.origin.headers.get::<header::Cookie>() {
             Some(c) => c.to_cookie_jar(&key.0),
             None => CookieJar::new(&key.0)

@@ -1,5 +1,9 @@
-use {Request, Response, Cookies, cookies};
+//use {Request, Response, Cookies, cookies};
+
 use cookie::Cookie;
+use cookies::{self, Cookies};
+use response::Response;
+use request::Request;
 use plugin::{Plugin, Pluggable};
 use typemap::Key;
 use std::marker::PhantomData;
@@ -10,6 +14,7 @@ use byteorder::{ByteOrder, BigEndian};
 use std::error::Error;
 use std::str;
 use std::fmt::Debug;
+
 
 static COOKIE_KEY : &'static str = "__SESSION";
 

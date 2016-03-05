@@ -32,7 +32,7 @@ groupable = "0.2"
 mustache = "0.6"
 lazy_static = "0.1"
 modifier = "0.1"
-cookie = "^0.2"
+cookie = "^0.1"
 byteorder = "^0.3"
 rand = "^0.3"
 

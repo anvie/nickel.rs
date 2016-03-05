@@ -17,6 +17,9 @@ extern crate rand;
 #[macro_use] extern crate log;
 #[macro_use] extern crate lazy_static;
 
+pub mod session;
+pub mod cookies;
+
 pub use nickel::Nickel;
 pub use request::Request;
 pub use response::Response;
@@ -32,7 +35,9 @@ pub use router::{Router, Route, RouteResult, HttpRouter};
 pub use nickel_error::NickelError;
 pub use mimes::MediaType;
 pub use responder::Responder;
-//pub use cookie::Cookie;
+pub use cookie::Cookie;
+pub use cookies::Cookies;
+
 
 #[cfg(feature = "session")]
 pub use session::{Session, CookieSession};
