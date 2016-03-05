@@ -1,3 +1,46 @@
+<a name="0.7.3"></a>
+### 0.7.3 (2015-11-23)
+
+
+#### Bug Fixes
+
+* **Cargo:**  remove wildcard dependency versions ([ded09d3b](https://github.com/nickel-org/nickel.rs/commit/ded09d3b10304832e392a98724934b5f35f57119))
+
+
+
+<a name="0.7.2"></a>
+### 0.7.2 (2015-11-18)
+
+
+#### Performance
+
+* **hyper:**  re-enable keep-alive by default ([dfcb3baf](https://github.com/nickel-org/nickel.rs/commit/dfcb3baf7fb046ec7bfe14186ddb4a758bbb381c))
+
+#### Bug Fixes
+
+* **static_files:**  deny suspicious paths ([bbba1ebf](https://github.com/nickel-org/nickel.rs/commit/bbba1ebf6eaa81e325edb9fb46b20d25d0ad52ed))
+
+
+
+<a name="0.7.1"></a>
+### 0.7.1 (2015-11-02)
+
+
+#### Bug Fixes
+
+* ***:**  add default typeparam for MiddlewareResult ([d135b4e9](https://github.com/nickel-org/nickel.rs/commit/d135b4e9a254e8a4722a10bad7c99121cf0c7dc2))
+* **send_file:**  don't overwrite the ContentType header if it exists ([8eb8c5fd](https://github.com/nickel-org/nickel.rs/commit/8eb8c5fd92d18f3455e1fcac426501aabba64f42), closes [#285](https://github.com/nickel-org/nickel.rs/issues/285))
+* **serverdata:**  extend lifetime of return value of {Request|Response}::server_data ([eff2ac7c](https://github.com/nickel-org/nickel.rs/commit/eff2ac7c46a71a40aceb1f444fa9309ef2ec692a))
+
+#### Features
+
+* **request:**  add extension to get Request::referer ([38b21cb4](https://github.com/nickel-org/nickel.rs/commit/38b21cb4f98af367ab99dac940b8420298e31e71))
+* **response:**
+  *  add next_middleware method for convenience ([32554795](https://github.com/nickel-org/nickel.rs/commit/3255479526621754f344d1ba6b8d422bb95794fa))
+  *  add extension for simple redirects ([d8629ad2](https://github.com/nickel-org/nickel.rs/commit/d8629ad220a93e14993b2fb4ec251d96d2e2a532))
+
+
+
 <a name="0.7.0"></a>
 ## 0.7.0 (2015-09-15)
 

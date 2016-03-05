@@ -18,7 +18,7 @@ use mustache::Template;
 use std::io::{self, Read, Write, copy};
 use std::fs::File;
 use std::any::Any;
-use {NickelError, Halt, MiddlewareResult, Responder};
+use {NickelError, Halt, MiddlewareResult, Responder, Action};
 use modifier::Modifier;
 use plugin::{Extensible, Pluggable};
 use typemap::TypeMap;
@@ -132,7 +132,7 @@ impl<'a, D> Response<'a, D, Fresh> {
         self.origin.headers_mut().remove::<ContentLength>();
         // Determine content type by file extension or default to binary
         let mime = mime_from_filename(path).unwrap_or(MediaType::Bin);
-        self.set(mime);
+        self.set_header_fallback(|| ContentType(mime.into()));
 
         let mut file = try_with!(self, {
             File::open(path).map_err(|e| format!("Failed to send file '{:?}': {}",
@@ -279,13 +279,21 @@ impl<'a, D> Response<'a, D, Fresh> {
         }
     }
 
-    //pub fn server_data(&self) -> &D {
-    //    &self.data
-    //}
+    pub fn server_data(&self) -> &'a D {
+        &self.data
+    }
 
     pub fn on_send<F>(&mut self, f: F)
             where F: FnMut(&mut Response<'a, D, Fresh>) + 'static {
         self.on_send.push(Box::new(f))
+    }
+
+    /// Pass execution off to another Middleware
+    ///
+    /// When returned from a Middleware, it allows computation to continue
+    /// in any Middleware queued after the active one.
+    pub fn next_middleware(self) -> MiddlewareResult<'a, D> {
+        Ok(Action::Continue(self))
     }
 }
 
@@ -329,7 +337,7 @@ impl <'a, D, T: 'static + Any> Response<'a, D, T> {
         self.origin.headers()
     }
 
-    pub fn data(&self) -> &D {
+    pub fn data(&self) -> &'a D {
         &self.data
     }
 }

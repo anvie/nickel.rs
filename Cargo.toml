@@ -1,7 +1,7 @@
 [package]
 
 name = "nickel"
-version = "0.7.0"
+version = "0.7.3"
 authors = [ "Christoph Burgdorf <christoph@thoughtram.io>",
             "Kevin Butler <haqkrs@gmail.com>",
             "Simon Persson <simon@flaskpost.org>" ]
@@ -15,22 +15,24 @@ keywords = ["nickel", "server", "web", "express"]
 [features]
 unstable = ["hyper/nightly", "compiletest_rs"]
 ssl = ["hyper/ssl"]
+timeouts = ["hyper/timeouts"]
+default = ["timeouts"]
 secure_cookies = ["cookie/secure"]
 session = ["secure_cookies"]
 
 [dependencies]
-url = "*"
-time = "*"
-typemap = "*"
-plugin = "*"
-regex = "*"
-rustc-serialize = "*"
-log = "*"
-groupable = "*"
-mustache = "*"
-lazy_static = "*"
-modifier = "*"
-cookie = "^0.1"
+url = "0.2"
+time = "0.1"
+typemap = "0.3"
+plugin = "0.2"
+regex = "0.1"
+rustc-serialize = "0.3"
+log = "0.3"
+groupable = "0.2"
+mustache = "0.6"
+lazy_static = "0.1"
+modifier = "0.1"
+cookie = "^0.2"
 byteorder = "^0.3"
 rand = "^0.3"
 
@@ -44,13 +46,19 @@ optional = true
 
 [[example]]
 
-name = "example"
-path = "examples/example.rs"
+name = "logger_middleware"
+path = "examples/logger_middleware.rs"
 
 [[example]]
 
-name = "session_example"
-path = "examples/session_example.rs"
+name = "routing"
+path = "examples/routing.rs"
+
+[[example]]
+
+name = "template"
+path = "examples/template.rs"
+
 
 [[example]]
 
@@ -64,11 +72,6 @@ path = "examples/example_with_default_router.rs"
 
 [[example]]
 
-name = "example_template"
-path = "examples/example_template.rs"
-
-[[example]]
-
 name = "macro_example"
 path = "examples/macro_example.rs"
 
@@ -79,13 +82,43 @@ path = "examples/hello_world.rs"
 
 [[example]]
 
+name = "hello_world_macro"
+path = "examples/hello_world_macro.rs"
+
+[[example]]
+
+name = "json"
+path = "examples/json.rs"
+
+[[example]]
+
+name = "custom_error_handler"
+path = "examples/custom_error_handler.rs"
+
+[[example]]
+
 name = "moved_ownership"
 path = "examples/moved_ownership.rs"
 
 [[example]]
 
-name = "example_route_data"
-path = "examples/example_route_data.rs"
+name = "route_data"
+path = "examples/route_data.rs"
+
+[[example]]
+
+name = "static_files"
+path = "examples/static_files.rs"
+
+[[example]]
+
+name = "regex_route"
+path = "examples/regex_route.rs"
+
+[[example]]
+
+name = "query_string"
+path = "examples/query_string.rs"
 
 [[example]]
 

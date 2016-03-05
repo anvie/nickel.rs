@@ -5,9 +5,9 @@ use hyper::net;
 
 pub use self::Action::{Continue, Halt};
 
-pub type MiddlewareResult<'mw, D> = Result<Action<Response<'mw, D, net::Fresh>,
-                                              Response<'mw, D, net::Streaming>>,
-                                        NickelError<'mw, D>>;
+pub type MiddlewareResult<'mw, D= ()> = Result<Action<Response<'mw, D, net::Fresh>,
+                                                      Response<'mw, D, net::Streaming>>,
+                                               NickelError<'mw, D>>;
 
 pub enum Action<T=(), U=()> {
     Continue(T),
@@ -18,7 +18,7 @@ pub enum Action<T=(), U=()> {
 // but that's not possible as of today. We have to use + Send for now.
 pub trait Middleware<D>: Send + 'static + Sync {
     fn invoke<'mw, 'conn>(&'mw self, _req: &mut Request<'mw, 'conn, D>, res: Response<'mw, D, net::Fresh>) -> MiddlewareResult<'mw, D> {
-        Ok(Continue(res))
+        res.next_middleware()
     }
 }
 

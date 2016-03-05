@@ -32,7 +32,7 @@ pub use router::{Router, Route, RouteResult, HttpRouter};
 pub use nickel_error::NickelError;
 pub use mimes::MediaType;
 pub use responder::Responder;
-pub use cookies::Cookies;
+//pub use cookie::Cookie;
 
 #[cfg(feature = "session")]
 pub use session::{Session, CookieSession};
@@ -56,8 +56,7 @@ mod query_string;
 mod urlencoded;
 mod nickel_error;
 mod default_error_handler;
-pub mod cookies;
-pub mod session;
+pub mod extensions;
 
 pub mod status {
     pub use hyper::status::StatusCode;

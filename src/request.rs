@@ -11,7 +11,7 @@ use hyper::uri::RequestUri::AbsolutePath;
 ///
 /// The lifetime `'server` represents the lifetime of data internal to
 /// the server. It is fixed and longer than `'mw`.
-pub struct Request<'mw, 'server: 'mw, D: 'mw> {
+pub struct Request<'mw, 'server: 'mw, D: 'mw = ()> {
     ///the original `hyper::server::Request`
     pub origin: HyperRequest<'mw, 'server>,
     ///a `HashMap<String, String>` holding all params with names and values
@@ -44,7 +44,7 @@ impl<'mw, 'server, D> Request<'mw, 'server, D> {
         }
     }
 
-    pub fn data(&self) -> &D {
+    pub fn server_data(&self) -> &'mw D {
         &self.data
     }
 }
