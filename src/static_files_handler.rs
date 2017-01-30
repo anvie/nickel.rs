@@ -3,6 +3,7 @@ use std::io::ErrorKind::NotFound;
 use std::fs;
 
 use hyper::method::Method::{Get, Head};
+use hyper::header::Connection;
 
 use status::StatusCode;
 use request::Request;
@@ -58,7 +59,7 @@ impl StaticFilesHandler {
 
     fn with_file<'a, 'b, D, P>(&self,
                             relative_path: Option<P>,
-                            res: Response<'a, D>)
+                            mut res: Response<'a, D>)
             -> MiddlewareResult<'a, D> where P: AsRef<Path> {
         if let Some(path) = relative_path {
             let path = path.as_ref();
@@ -69,7 +70,10 @@ impl StaticFilesHandler {
 
             let path = self.root_path.join(path);
             match fs::metadata(&path) {
-                Ok(ref attr) if attr.is_file() => return res.send_file(&path),
+                Ok(ref attr) if attr.is_file() => {
+                    res.set(Connection::close());
+                    return res.send_file(&path);
+                },
                 Err(ref e) if e.kind() != NotFound => debug!("Error getting metadata \
                                                               for file '{:?}': {:?}",
                                                               path, e),
