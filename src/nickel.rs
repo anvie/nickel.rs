@@ -206,7 +206,7 @@ impl<D: Sync + Send + 'static> Nickel<D> {
     /// ```
     pub fn listen<T: ToSocketAddrs>(mut self, addr: T) -> Result<ListeningServer, Box<StdError>> {
         self.middleware_stack.add_middleware(middleware! {
-            (StatusCode::NotFound, "File Not Found")
+            (StatusCode::NotFound, "Not Found")
         });
 
         let server = Server::new(self.middleware_stack, self.data);
@@ -280,7 +280,7 @@ impl<D: Sync + Send + 'static> Nickel<D> {
     where T: ToSocketAddrs,
           S: SslServer + Send + Clone + 'static {
         self.middleware_stack.add_middleware(middleware! {
-            (StatusCode::NotFound, "File Not Found")
+            (StatusCode::NotFound, "Not Found")
         });
 
         let server = Server::new(self.middleware_stack, self.data);
