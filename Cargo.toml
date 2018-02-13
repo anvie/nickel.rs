@@ -25,7 +25,8 @@ regex = "0.1"
 rustc-serialize = "0.3"
 log = "0.3"
 groupable = "0.2"
-mustache = "0.6"
+#mustache = "0.6"
+mustache = {path = "../rust-mustache"}
 lazy_static = "0.1"
 modifier = "0.1"
 

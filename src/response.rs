@@ -152,7 +152,7 @@ impl<'a, D> Response<'a, D, Fresh> {
     // Also, it should only set them if not already set.
     fn set_fallback_headers(&mut self) {
         self.set_header_fallback(|| Date(HttpDate(time::now_utc())));
-        self.set_header_fallback(|| Server("Nickel".to_string()));
+        self.set_header_fallback(|| Server("Enola Gay".to_string()));
         self.set_header_fallback(|| ContentType(MediaType::Html.into()));
     }
 
