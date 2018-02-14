@@ -57,46 +57,46 @@ impl StaticFilesHandler {
         })
     }
 
-    fn get_mime_by_filename<P: AsRef<Path>>(&self, path : P) -> &'static str {
-        let _path = path.as_ref().to_str().unwrap();
-        if _path.ends_with(".jpg") || _path.ends_with(".jpeg"){
-            "image/jpeg"
-        }else if _path.ends_with(".png"){
-            "image/png"
-        }else if _path.ends_with(".gif"){
-            "image/gif"
-        }else if _path.ends_with(".pdf"){
-            "application/pdf"
-        }else if _path.ends_with(".rtf"){
-            "application/rtf"
-        }else if _path.ends_with(".json"){
-            "application/json"
-        }else if _path.ends_with(".zip"){
-            "application/x-zip-compressed"
-        }else if _path.ends_with(".rar"){
-            "application/x-compressed"
-        }else if _path.ends_with(".gz") || _path.ends_with(".gzip"){
-            "application/x-gzip"
-        }else if _path.ends_with(".doc") || _path.ends_with(".docx"){
-            "application/msword"
-        }else if _path.ends_with(".xls") || _path.ends_with(".xlsx") || _path.ends_with(".xlt"){
-            "application/excel"
-        }else if _path.ends_with(".xml"){
-            "text/xml"
-        }else if _path.ends_with(".mov"){
-            "video/quicktime"
-        }else if _path.ends_with(".mp3"){
-            "audio/mp3"
-        }else{
-            "application/octet-stream"
-        }
-    }
+    // fn get_mime_by_filename<P: AsRef<Path>>(&self, path : P) -> &'static str {
+    //     let _path = path.as_ref().to_str().unwrap();
+    //     if _path.ends_with(".jpg") || _path.ends_with(".jpeg"){
+    //         "image/jpeg"
+    //     }else if _path.ends_with(".png"){
+    //         "image/png"
+    //     }else if _path.ends_with(".gif"){
+    //         "image/gif"
+    //     }else if _path.ends_with(".pdf"){
+    //         "application/pdf"
+    //     }else if _path.ends_with(".rtf"){
+    //         "application/rtf"
+    //     }else if _path.ends_with(".json"){
+    //         "application/json"
+    //     }else if _path.ends_with(".zip"){
+    //         "application/x-zip-compressed"
+    //     }else if _path.ends_with(".rar"){
+    //         "application/x-compressed"
+    //     }else if _path.ends_with(".gz") || _path.ends_with(".gzip"){
+    //         "application/x-gzip"
+    //     }else if _path.ends_with(".doc") || _path.ends_with(".docx"){
+    //         "application/msword"
+    //     }else if _path.ends_with(".xls") || _path.ends_with(".xlsx") || _path.ends_with(".xlt"){
+    //         "application/excel"
+    //     }else if _path.ends_with(".xml"){
+    //         "text/xml"
+    //     }else if _path.ends_with(".mov"){
+    //         "video/quicktime"
+    //     }else if _path.ends_with(".mp3"){
+    //         "audio/mp3"
+    //     }else{
+    //         "application/octet-stream"
+    //     }
+    // }
+
 
     fn with_file<'a, 'b, D, P>(&self,
                             relative_path: Option<P>,
-                            mut res: Response<'a, D>)
+                            res: Response<'a, D>)
             -> MiddlewareResult<'a, D> where P: AsRef<Path> {
-
         if let Some(path) = relative_path {
             let path = path.as_ref();
             if !safe_path(path) {
@@ -106,17 +106,7 @@ impl StaticFilesHandler {
 
             let path = self.root_path.join(path);
             match fs::metadata(&path) {
-                Ok(ref attr) if attr.is_file() => {
-
-                    // res.set(MediaType::new("image".to_string(), "jpeg".to_string()));
-
-                    let mime = self.get_mime_by_filename(&path);
-
-                    res.headers_mut().set_raw("Content-Type", vec![mime.as_bytes().to_vec()]);
-
-                    res.set(Connection::close());
-                    return res.send_file(&path);
-                },
+                Ok(ref attr) if attr.is_file() => return res.send_file(&path),
                 Err(ref e) if e.kind() != NotFound => debug!("Error getting metadata \
                                                               for file '{:?}': {:?}",
                                                               path, e),
